@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title></title>
+<link rel="stylesheet" type="text/css" href="css/login.css" />
+<!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+<!--<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">-->
+<!--<link rel="stylesheet" href="/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">-->
+</head>
+<body>
+	<div
+		style="text-align: center; margin: 50px 0; font: normal 14px/24px; color: #000000">
+		<h1>记事本</h1>
+	</div>
+	<div class="htmleaf-container">
+		<div class="wrapper">
+			<div class="container">
+				<h1>Welcome</h1>
+
+				<div class="form">
+					<!--<input type="text" placeholder="Username" name="username" id="username">
+					<input type="password" placeholder="Password" name="password" id="password">
+					<button type="submit" id="login-button">Login</button>-->
+
+					<input type="text" placeholder="Usernum" name="num" id="num">
+					<input type="password" placeholder="Password" name="password"
+						   id="password">
+					<button type="submit" id="login-button">Login</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</body>
+</html>
+<!--<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>-->
+<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdn.bootcss.com/sweetalert/2.1.2/sweetalert.min.js"></script>
+<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+	<script>
+		$('#login-button').click(function(event) {
+			var data = new Object();
+			data.username = $("#num").val();
+			data.password = $("#password").val();			
+			 $.ajax({
+					async : "false",
+					url : "/user/login",
+					data : data,
+					dataType : "json",
+					type : "post",
+					success : function(data) {
+						var user = data.data
+						console.log(user);
+						if (user != null && user.id>0) {
+							event.preventDefault();
+							$('form').fadeOut(500);
+							$('.wrapper').addClass('form-success');
+							window.setTimeout("window.location.replace('/index.html')",1500);
+						} else {
+								swal("登录失败，请确认帐号是否存在或密码是否正确");
+								}
+						},
+					error:function(){
+						swal("error");
+					}
+					});
+
+		});
+	</script>

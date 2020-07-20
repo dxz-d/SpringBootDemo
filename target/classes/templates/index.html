@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>JAVA Web 记事本</title>
+	<!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+	<!--<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">-->
+	<!--<link rel="stylesheet" href="/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">-->
+</head>
+<style>
+	.overflow{
+		/*max-width: 230px;*/
+		white-space: nowrap;/*不换行*/
+		text-wrap:none;/*主流浏览器都不支持*/
+		overflow: hidden;/*隐藏*/
+		text-overflow: ellipsis;/*配合overflow使用，超出部分显示...*/
+	}
+</style>
+<body>
+<div id="header"></div>
+<div class="container">
+	<div class="row clearfix">
+		<div class="col-md-12 column">
+			<div id="Bt" class="page-header">
+				<h1>
+					JAVA Web 记事本<small>简易版</small>
+				</h1>
+			</div>
+
+		</div>
+	</div>
+	<div class="row clearfix">
+		<div class="col-md-3 column">
+
+			<div class="list-group">
+				<a class="list-group-item active"> <span class="badge">[[${notes.size()}]]</span>列表</a>
+				<div class="list-group-item" style="overflow-y: auto;min-height:50px;max-height: 500px;overflow-x: hidden;">
+					<a class="list-group-item" href="javascript:ShowTap('/note/upload')" id="newTap" style="background-color: lightblue">
+						#新增#
+					</a>
+					<div th:if="${not #lists.isEmpty(notes)}" th:each="n:${notes}">
+					<a class="list-group-item overflow" th:href="'javascript:ShowTap(\''+'/note/'+${n.id}+'\')'">
+						[[${n.title}]]
+					</a>
+					</div>
+				</div>
+				<a href="#" class="list-group-item active">Back to Top</a>
+			</div>
+		</div>
+		<div class="col-md-8 column">
+			<div id="note">
+			</div>
+
+		</div>
+	</div>
+
+</div>
+</body>
+
+</html>
+<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdn.bootcss.com/wangEditor/10.0.13/wangEditor.min.js"></script>
+<!--<script src="https://cdn.bootcss.com/js-cookie/latest/js.cookie.js"></script>-->
+<script src="https://cdn.bootcss.com/sweetalert/2.1.2/sweetalert.min.js"></script>
+<script type="text/javascript" src="/js/upload.js" ></script>
+<script type="text/javascript" src="/js/common.js" ></script>
+<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script type="text/javascript">
+	$("#note").load("/note/upload")
+	ShowTap = function(id){
+		$("#note").load(id)
+	}
+</script>
